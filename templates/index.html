@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Pixel Flask Server Documentation</title>
+    <style>
+        table, th, td {
+            border: 1px solid black;
+            border-collapse: collapse;
+        }
+    </style>
+</head>
+<body>
+
+<h1>Pixel Flask Server Documentation</h1>
+
+<table style="width:100%">
+
+    <!-- Table Headers -->
+    <tr>
+        <!-- API --> <th>API</th>
+
+        <!-- GET Request Parameters --> <th>GET Request Parameters</th>
+        <!-- GET Response --> <th>GET Response</th>
+
+        <!-- POST Request Parameters --> <th>POST Request Parameters</th>
+        <!-- POST Response --> <th>POST Response</th>
+    </tr>
+
+    <!-- /users -->
+    <tr>
+        <tr>
+        <!-- API --> <th>/users</th>
+
+        <!-- GET Request Parameters --> <th></th>
+        <!-- GET Response --> <th>Big JSON list consist of all users.</th>
+
+        <!-- POST Request Parameters --> <th></th>
+        <!-- POST Response --> <th></th>
+    </tr>
+
+    <!-- /exists -->
+    <tr>
+        <!-- API --> <th>/exists</th>
+
+        <!-- GET Request Parameters --> <th>username OR email</th>
+        <!-- GET Response --> <th>JSON with <i>status</i> and <i>desc</i> (if <i>status</i> is <i>error</i>).</th>
+
+        <!-- POST Request Parameters --> <th></th>
+        <!-- POST Response --> <th></th>
+    </tr>
+
+    <!-- /register -->
+    <tr>
+        <!-- API --> <th>/register</th>
+
+        <!-- GET Request Parameters --> <th></th>
+        <!-- GET Response --> <th></th>
+
+        <!-- POST Request Parameters --> <th>username AND fullname AND password AND email</th>
+        <!-- POST Response --> <th>JSON with <i>status</i> and <i>desc</i> (if <i>status</i> is <i>error</i>).</th>
+    </tr>
+
+    <!-- /login -->
+    <tr>
+        <!-- API --> <th>/login</th>
+
+        <!-- GET Request Parameters --> <th>username AND password</th>
+        <!-- GET Response --> <th>JSON with <i>status</i> and <i>desc</i> (if <i>status</i> is <i>error</i>).</th>
+
+        <!-- POST Request Parameters --> <th></th>
+        <!-- POST Response --> <th></th>
+    </tr>
+
+    <!-- /reset_request -->
+    <tr>
+        <!-- API --> <th>/reset_request</th>
+
+        <!-- GET Request Parameters --> <th>email</th>
+        <!-- GET Response --> <th>JSON with <i>status</i> and <i>desc</i> (if <i>status</i> is <i>error</i>).</th>
+
+        <!-- POST Request Parameters --> <th></th>
+        <!-- POST Response --> <th></th>
+    </tr>
+
+    <!-- /reset -->
+    <tr>
+        <!-- API --> <th>/reset</th>
+
+        <!-- GET Request Parameters --> <th></th>
+        <!-- GET Response --> <th></th>
+
+        <!-- POST Request Parameters --> <th>email AND password AND code</th>
+        <!-- POST Response --> <th>JSON with <i>status</i> and <i>desc</i> (if <i>status</i> is <i>error</i>).</th>
+    </tr>
+
+</table>
+
+</body>
+</html>

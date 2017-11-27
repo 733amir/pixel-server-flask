@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, render_template, abort
 from db import *
 
 app = Flask(__name__)
@@ -7,7 +7,7 @@ db = Database()
 
 @app.route('/')
 def root():
-    return 'Hello World!'
+    return render_template('index.html')
 
 
 @app.route('/users', methods=['GET'])
@@ -15,60 +15,66 @@ def users():
     return jsonify(db.users)
 
 
-@app.route('/resets', methods=['GET'])
-def resets():
-    return jsonify(db.reset_pass_codes)
-
-
-@app.route('/username_exists', methods=['GET'])
-def username_exists():
+@app.route('/exists', methods=['GET'])
+def exists():
     username = request.args.get('username')
+    email = request.args.get('email')
 
-    # TODO Check username alphanumeric and length and send {'status': 'error'}.
-
-    # Username existence check
-    exists = db.username_exists(username)
-
-    if not exists:
-        return jsonify({
-            'status': 'ok'
-        })
+    if username is not None and email is None:
+        if db.username_exists(username):
+            return jsonify({
+                'status': 'ok'
+            }), 200
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Username doesn\'t exists!'
+            }), 404
+    elif username is None and email is not None:
+        if db.email_exists(email):
+            return jsonify({
+                'status': 'ok'
+            }), 200
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Email doesn\'t exists!'
+            }), 404
     else:
         return jsonify({
             'status': 'error',
-            'desc': 'Username exists!'
-        })
+            'desc': 'Bad request!'
+        }), 400
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST'])
 def register():
-    if request.method == 'GET':
-        return jsonify({
-            'status': 'ok',
-            'required': [
-                {'username': 'string with 5 or more alphanumeric characters.'},
-                {'email':    'string with valid email structure.'},
-                {'fullname': 'UTF-8 string.'},
-                {'password': 'string with 6 or more characters.'}
-            ]
-        })
-    else:
-        # TODO check for json structure received and return {'status': 'error'}.
-        username = request.form['username']
-        password = request.form['password']
-        fullname = request.form['fullname']
-        email = request.form['email']
+    username = request.form['username']
+    password = request.form['password']
+    fullname = request.form['fullname']
+    email = request.form['email']
 
+    if None not in [username, password, fullname, email]:
         if db.username_exists(username):
             return jsonify({
                 'status': 'error',
-                'desc': 'username exists!'
-            })
+                'desc': 'Username exists!'
+            }), 403
+        elif db.email_exists(email):
+            return jsonify({
+                'status': 'error',
+                'desc': 'Email exists!'
+            }), 403
         else:
             db.add_user(username, fullname, email, password)
             return jsonify({
                 'status': 'ok'
-            })
+            }), 201
+    else:
+        return jsonify({
+            'status': 'error',
+            'desc': 'Bad request!'
+        }), 400
 
 
 @app.route('/login', methods=['GET'])
@@ -76,50 +82,77 @@ def login():
     username = request.args.get('username')
     password = request.args.get('password')
 
-    if db.check(username, password):
-        return jsonify({
-            'status': 'ok'
-        })
+    if None not in [username, password]:
+        if db.login(username, password):
+            return jsonify({
+                'status': 'ok'
+            }), 200
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Username or Password is wrong!'
+            }), 404
     else:
         return jsonify({
             'status': 'error',
-            'desc': 'Username or Password is wrong!'
-        })
+            'desc': 'Bad request!'
+        }), 400
 
 
-@app.route('/reset_password_request', methods=['GET'])
-def reset_password_request():
+@app.route('/reset_request', methods=['GET'])
+def reset_request():
     email = request.args.get('email')
 
-    if db.email_exists(email):
-        db.add_reset_code(email)
-        return jsonify({
-            'status': 'ok'
-        })
+    if None not in [email]:
+        if db.email_exists(email):
+            return jsonify({
+                'status': 'ok'
+            }), 200
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Email doesn\'t exists!'
+            }), 404
     else:
         return jsonify({
             'status': 'error',
-            'desc': 'Email doesn\'t exists!'
-        })
+            'desc': 'Bad request!'
+        }), 400
 
 
-@app.route('/reset_password', methods=['POST'])
-def reset_password():
+@app.route('/reset', methods=['POST'])
+def reset():
     email = request.form['email']
     code = request.form['code']
     new_password = request.form['password']
 
-    if db.get_reset_code(email) == code:
-        db.reset_password(email, new_password)
-        db.remove_reset_code(email)
-        return jsonify({
-            'status': 'ok'
-        })
+    if None not in [email, code, new_password]:
+        if db.get_reset_code(email) == code:
+            db.reset_password(email, new_password)
+            db.update_reset_code(email)
+            return jsonify({
+                'status': 'ok'
+            })
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Email and Code didn\'t match!'
+            }), 403
     else:
         return jsonify({
             'status': 'error',
-            'desc': 'Email and Code didn\'t match!'
-        })
+            'desc': 'Bad request!'
+        }), 400
+
+
+# @app.route('/profile', methods=['GET', 'POST'])
+# def profile():
+#     if request.method == 'GET':
+#         username = request.args.get('username')
+#
+#
+#     elif request.method == 'POST':
+#         pass
 
 
 if __name__ == '__main__':
