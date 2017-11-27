@@ -29,7 +29,7 @@ def exists():
             return jsonify({
                 'status': 'error',
                 'desc': 'Username doesn\'t exists!'
-            }), 404
+            }), 200  #404
     elif username is None and email is not None:
         if db.email_exists(email):
             return jsonify({
@@ -39,12 +39,12 @@ def exists():
             return jsonify({
                 'status': 'error',
                 'desc': 'Email doesn\'t exists!'
-            }), 404
+            }), 200  #404
     else:
         return jsonify({
             'status': 'error',
             'desc': 'Bad request!'
-        }), 400
+        }), 200  #400
 
 
 @app.route('/register', methods=['POST'])
@@ -59,22 +59,22 @@ def register():
             return jsonify({
                 'status': 'error',
                 'desc': 'Username exists!'
-            }), 403
+            }), 200  #403
         elif db.email_exists(email):
             return jsonify({
                 'status': 'error',
                 'desc': 'Email exists!'
-            }), 403
+            }), 200  #403
         else:
             db.add_user(username, fullname, email, password)
             return jsonify({
                 'status': 'ok'
-            }), 201
+            }), 200  #201
     else:
         return jsonify({
             'status': 'error',
             'desc': 'Bad request!'
-        }), 400
+        }), 200  #400
 
 
 @app.route('/login', methods=['GET'])
@@ -91,12 +91,12 @@ def login():
             return jsonify({
                 'status': 'error',
                 'desc': 'Username or Password is wrong!'
-            }), 404
+            }), 200  #404
     else:
         return jsonify({
             'status': 'error',
             'desc': 'Bad request!'
-        }), 400
+        }), 200  #400
 
 
 @app.route('/reset_request', methods=['GET'])
@@ -112,12 +112,12 @@ def reset_request():
             return jsonify({
                 'status': 'error',
                 'desc': 'Email doesn\'t exists!'
-            }), 404
+            }), 200  #404
     else:
         return jsonify({
             'status': 'error',
             'desc': 'Bad request!'
-        }), 400
+        }), 200  #400
 
 
 @app.route('/reset', methods=['POST'])
@@ -132,17 +132,17 @@ def reset():
             db.update_reset_code(email)
             return jsonify({
                 'status': 'ok'
-            })
+            }), 200
         else:
             return jsonify({
                 'status': 'error',
                 'desc': 'Email and Code didn\'t match!'
-            }), 403
+            }), 200  #403
     else:
         return jsonify({
             'status': 'error',
             'desc': 'Bad request!'
-        }), 400
+        }), 200  #400
 
 
 # @app.route('/profile', methods=['GET', 'POST'])
