@@ -1,5 +1,7 @@
 from random import randrange
 
+IP = '192.168.10.120'
+
 class Database:
     count = 2
     reset_pass_code_digit_count = 5
@@ -7,27 +9,27 @@ class Database:
     users = [
         {
             'id': 1,
-            'username': 'amirr',
+            'username': 'usernamea',
             'fullname': 'امیر خزاعی',
-            'email': 'a@b.com',
+            'email': 'a@b.c',
             'password': 'a',
             'profile': {
-                'header': '',
-                'image': '',
-                'interest': []
+                'header': 'http://{}:5000/static/a-header.png'.format(IP),
+                'image': 'http://{}:5000/static/a.jpg'.format(IP),
+                'interest': ['Sports', 'Programming', 'Android']
             },
             'reset_code': '11111'
         },
         {
             'id': 2,
-            'username': 'parsa',
+            'username': 'usernameb',
             'fullname': 'پارسا حجابی',
-            'email': 'p@b.com',
+            'email': 'b@b.c',
             'password': 'b',
             'profile': {
-                'header': '',
-                'image': '',
-                'interest': []
+                'header': 'http://{}:5000/static/b-header.jpg'.format(IP),
+                'image': 'http://{}:5000/static/b.jpg'.format(IP),
+                'interest': ['Guitar', 'Off Road', 'Camping', 'Driving']
             },
             'reset_code': '22222'
         }
@@ -50,6 +52,11 @@ class Database:
             'reset_code': code
         })
 
+    def get_user(self, username):
+        for user in self.users:
+            if user['username'] == username:
+                return user
+
     def username_exists(self, username):
         for user in self.users:
             if user['username'] == username:
@@ -61,6 +68,11 @@ class Database:
             if user['email'] == email:
                 return True
         return False
+
+    def get_email(self, username):
+        for user in self.users:
+            if user['username'] == username:
+                return user['email']
 
     def login(self, username, password):
         for user in self.users:
@@ -85,3 +97,8 @@ class Database:
                 user['password'] = password
                 return True
         return False
+
+    def get_profile(self, username):
+        for user in self.users:
+            if user['username'] == username:
+                return user['profile']

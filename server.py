@@ -145,14 +145,87 @@ def reset():
         }), 200  #400
 
 
-# @app.route('/profile', methods=['GET', 'POST'])
-# def profile():
-#     if request.method == 'GET':
-#         username = request.args.get('username')
-#
-#
-#     elif request.method == 'POST':
-#         pass
+@app.route('/profile', methods=['GET', 'POST'])
+def profile():
+    if request.method == 'GET':
+        username = request.args.get('username')
+        if None not in [username]:
+            if db.username_exists(username):
+                return jsonify({
+                    'status': 'ok',
+                    'profile': db.get_profile(username)
+                }), 200
+            else:
+                return jsonify({
+                    'status': 'error',
+                    'desc': 'Username doesn\'t exists!'
+                }), 200  #404
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Bad request!'
+            }), 200  # 400
+    elif request.method == 'POST':
+        pass  # TODO profile edit, uploading header, image, change name, interests and bio
+
+
+@app.route('/account', methods=['GET', 'POST'])
+def account():
+    if request.method == 'GET':
+        username = request.args.get('username')
+        if None not in [username]:
+            if db.username_exists(username):
+                email = db.get_email(username)
+                return jsonify({
+                    'status': 'ok',
+                    'account': {
+                        'username': username,
+                        'email': email
+                    }
+                }), 200
+            else:
+                return jsonify({
+                    'status': 'error',
+                    'desc': 'Username doesn\'t exists!'
+                }), 200  # 404
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Bad request!'
+            }), 200  # 400
+    elif request.method == 'POST':
+        username = request.form['username']
+        email = request.form['email']
+        old_password = request.form['old_password']
+        new_password = None
+        if 'new_password' in request.form:
+            new_password = request.form['new_password']
+
+        if None not in [username, email, old_password]:
+            user = db.get_user(username)
+            if user is not None:
+                if user['password'] == old_password:
+                    user['email'] = email
+                    if new_password is not None:
+                        user['password'] = new_password
+                    return jsonify({
+                        'status': 'ok'
+                    }), 200
+                else:
+                    return jsonify({
+                        'status': 'error',
+                        'desc': 'Username or Password was wrong!'
+                    }), 200  # 403
+            else:
+                return jsonify({
+                    'status': 'error',
+                    'desc': 'Username doesn\'t exists!'
+                }), 200  # 400
+        else:
+            return jsonify({
+                'status': 'error',
+                'desc': 'Bad request!'
+            }), 200  # 400
 
 
 if __name__ == '__main__':
