@@ -1,6 +1,6 @@
 from random import randrange
 
-IP = '192.168.10.120'
+IP = '172.24.50.5'
 
 class Database:
     count = 2
@@ -16,7 +16,8 @@ class Database:
             'profile': {
                 'header': 'http://{}:5000/static/a-header.png'.format(IP),
                 'image': 'http://{}:5000/static/a.jpg'.format(IP),
-                'interest': ['Sports', 'Programming', 'Android']
+                'interest': ['Sports', 'Programming', 'Android'],
+                'bio': 'This is amir bio.'
             },
             'reset_code': '11111'
         },
@@ -29,7 +30,8 @@ class Database:
             'profile': {
                 'header': 'http://{}:5000/static/b-header.jpg'.format(IP),
                 'image': 'http://{}:5000/static/b.jpg'.format(IP),
-                'interest': ['Guitar', 'Off Road', 'Camping', 'Driving']
+                'interest': ['Guitar', 'Off Road', 'Camping', 'Driving'],
+                'bio': 'This is parsa bio.'
             },
             'reset_code': '22222'
         }

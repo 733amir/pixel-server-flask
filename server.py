@@ -1,4 +1,5 @@
 from flask import Flask, request, jsonify, render_template, abort
+from json import loads as jload
 from db import *
 
 app = Flask(__name__)
@@ -153,7 +154,8 @@ def profile():
             if db.username_exists(username):
                 return jsonify({
                     'status': 'ok',
-                    'profile': db.get_profile(username)
+                    'profile': db.get_profile(username),
+                    'fullname': db.get_user(username)['fullname']
                 }), 200
             else:
                 return jsonify({
@@ -166,7 +168,21 @@ def profile():
                 'desc': 'Bad request!'
             }), 200  # 400
     elif request.method == 'POST':
-        pass  # TODO profile edit, uploading header, image, change name, interests and bio
+        username = request.args.get('username')
+
+        # TODO get header and image of profile.
+        fullname = request.form['fullname']
+        bio = request.form['bio']
+        interests = jload(request.form['interests'])
+
+        user = db.get_user(username)
+        user['fullname'] = fullname
+        user['profile']['bio'] = bio
+        user['profile']['interest'] = interests
+
+        return jsonify({
+            'status': 'ok'
+        }), 200
 
 
 @app.route('/account', methods=['GET', 'POST'])
