@@ -244,5 +244,42 @@ def account():
             }), 200  # 400
 
 
+@app.route('/posts', methods=['GET', 'POST'])
+def posts():
+    if request.method == 'GET':
+        username = request.args.get('username')
+
+        user = db.get_user(username)
+        if user is not None:
+            return jsonify({
+                'status': 'ok',
+                'posts': user['posts']
+            })
+        else:
+            jsonify({
+                'status': 'error',
+                'desc': 'Username didn\'t exists.'
+            })
+    elif request.method == 'POST':
+        pass
+
+
+@app.route('/friends_list', methods=['GET'])
+def friends_list():
+    username = request.args.get('username')
+
+    user = db.get_user(username)
+    if user is not None:
+        return jsonify({
+            'status': 'ok',
+            'friends': user['friends']
+        })
+    else:
+        return jsonify({
+            'status': 'ok',
+            'desc': 'Username didn\'t exists.'
+        })
+
+
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)

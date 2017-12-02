@@ -1,6 +1,7 @@
 from random import randrange
 
-IP = '172.24.50.5'
+IP = '192.168.10.120'
+
 
 class Database:
     count = 2
@@ -16,10 +17,69 @@ class Database:
             'profile': {
                 'header': 'http://{}:5000/static/a-header.png'.format(IP),
                 'image': 'http://{}:5000/static/a.jpg'.format(IP),
-                'interest': ['Sports', 'Programming', 'Android'],
-                'bio': 'This is amir bio.'
+                'interest': ['ورزش', 'برنامه‌نویسی', 'مطالعه', 'فیلم سینمایی', 'رمان', 'ورزش', 'برنامه‌نویسی', 'مطالعه', 'فیلم سینمایی', 'رمان'],
+                'bio': 'دانشجو کارشانسی‌ارشد در رشته هوش‌مصنوعی هستم و علاقه‌مند به برنامه‌نویسی'
             },
-            'reset_code': '11111'
+            'reset_code': '11111',
+            'friends': [
+                'usernameb',
+                'usernameb',
+                'usernameb',
+                'usernameb',
+                'usernameb',
+                'usernameb',
+                'usernameb',
+                'usernameb',
+                'usernameb'
+            ],
+            'posts': [
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/1.jpg'.format(IP),
+                    'time': '۳ ساعت پیش',
+                    'location': 'رهنما',
+                    'comment_count': '28',
+                    'like_count': '192',
+                    'caption': 'شروع رهنما کالج :)'
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/2.jpg'.format(IP),
+                    'time': 'دیروز',
+                    'location': 'دشت و دمن',
+                    'comment_count': '112',
+                    'like_count': '380',
+                    'caption': 'جاتون خالی خیلی خوش میگذره.'
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/3.jpg'.format(IP),
+                    'time': 'هفته گذشته',
+                    'location': 'مریخ',
+                    'comment_count': '0',
+                    'like_count': '34',
+                    'caption': ''
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/4.jpg'.format(IP),
+                    'time': 'برج میلاد',
+                    'location': 'رهنما',
+                    'comment_count': '12',
+                    'like_count': '65',
+                    'caption': 'غروب غم انگیز تهرانه. دلم گرفته مرد و نامرد و خسته شدم. به هر دری میزنم بسته هست و حل نمیشه. برام دعا کنین.'
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/5.jpg'.format(IP),
+                    'time': 'ماه گذشته',
+                    'location': '',
+                    'comment_count': '15',
+                    'like_count': '0',
+                    'caption': ''
+                },
+
+            ]
         },
         {
             'id': 2,
@@ -33,7 +93,66 @@ class Database:
                 'interest': ['Guitar', 'Off Road', 'Camping', 'Driving'],
                 'bio': 'This is parsa bio.'
             },
-            'reset_code': '22222'
+            'reset_code': '22222',
+            'friends': [
+                'usernamea',
+                'usernamea',
+                'usernamea',
+                'usernamea',
+                'usernamea',
+                'usernamea',
+                'usernamea',
+                'usernamea',
+                'usernamea'
+            ],
+            'posts': [
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/1.jpg'.format(IP),
+                    'time': '۳ ساعت پیش',
+                    'location': 'رهنما',
+                    'comment_count': '28',
+                    'like_count': '192',
+                    'caption': 'شروع رهنما کالج :)'
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/2.jpg'.format(IP),
+                    'time': 'دیروز',
+                    'location': 'دشت و دمن',
+                    'comment_count': '112',
+                    'like_count': '380',
+                    'caption': 'جاتون خالی خیلی خوش میگذره.'
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/3.jpg'.format(IP),
+                    'time': 'هفته گذشته',
+                    'location': 'مریخ',
+                    'comment_count': '0',
+                    'like_count': '34',
+                    'caption': ''
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/4.jpg'.format(IP),
+                    'time': 'برج میلاد',
+                    'location': 'رهنما',
+                    'comment_count': '12',
+                    'like_count': '65',
+                    'caption': 'غروب غم انگیز تهرانه. دلم گرفته مرد و نامرد و خسته شدم. به هر دری میزنم بسته هست و حل نمیشه. برام دعا کنین.'
+                },
+                {
+                    'username': 'usernamea',
+                    'image': 'http://{}:5000/static/posts/5.jpg'.format(IP),
+                    'time': 'ماه گذشته',
+                    'location': '',
+                    'comment_count': '15',
+                    'like_count': '0',
+                    'caption': ''
+                },
+
+            ]
         }
     ]
 
